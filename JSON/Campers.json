@@ -1,0 +1,8 @@
+{ "camper": { 
+    "id": "12345",
+    "nombres": "Juan",
+    "apellidos": "Pérez", 
+    "direccion": "Calle 123, ciudad", 
+    "telefonos": { "celular": "3001234567", "fijo": "1234567" }, 
+    "estado": "Inscrito", "riesgo": "Bajo" } }
+
