@@ -21,6 +21,7 @@ def camper_menu():
         try:
             opcion = int(opcion)
             if opcion == 1:
+                
                 # Lógica para agregar Camper
                 add_campers()
             elif opcion == 2:
@@ -88,9 +89,15 @@ def add_campers():
     
     #Escribir los datos en el json 
     with open('campers.json', 'w') as outfile:
-        json.dump(data_new, archivo)
-        
+        json.dump(data_new, archivo)       
 def eliminar_camper(id_camper):
+    print("""
+            **********************
+            *                    *
+            * ELIMINAR    CAMPER *
+            *                    *
+            **********************
+            """)
     # Paso 1: Leer campers.json
     with open('campers.json', 'r') as file:
         campers = json.load(file)
@@ -123,5 +130,17 @@ def eliminar_camper(id_camper):
 
 # Uso de la función para eliminar un camper por su ID
 eliminar_camper("id_a_eliminar")
-    
 
+def imprimir_todos_los_campers():
+    print("""
+            **********************
+            *                    *
+            * IMPRIMIR CAMPERS   *
+            *                    *
+            **********************
+            """)
+    with open('campers.json', 'r') as archivo:
+        # Carga los datos del archivo
+        datos = json.load(archivo)
+    for camper in datos['campers']:
+            print(f"ID: {camper['id']}, Nombres: {camper['nombres']}, Apellidos: {camper['apellidos']}")

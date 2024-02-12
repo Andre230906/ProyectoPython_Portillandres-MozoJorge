@@ -1,12 +1,11 @@
-
 {
-  "id": "id",
-  "Nombres": "names",
-  "Apellidos": "lastName",
-  "Dirección": "dirección",
-  "Acudiente": "acudiente",
-  "Contacto Movil": "contactomovil",
-  "contacto Fijo" : "contactofijo",
-  "Estado": "estado",
-  "Riesgo": "riesgo"
+  "id": "12",
+  "Nombres": "lkjh",
+  "Apellidos": "kjh",
+  "Direccion": "85",
+  "Acudiente": "85",
+  "Contacto celular": "85",
+  "Contacto fijo": "65",
+  "Estado": "5kbv",
+  "Riesgo": "lkmn"
 }
