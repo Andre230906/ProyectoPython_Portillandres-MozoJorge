@@ -40,36 +40,32 @@ def add_campers():
         
 
 
-def actualizar_datos_camper(id_camper, datos_actualizados):
-    print("""
-            **********************
-            *                    *
-            * ACTUALIZAR  CAMPER *
-            *                    *
-            **********************
-            """)
-    
-    # Abre el archivo JSON en modo lectura y escritura
-    with open('JSON/Campers.json', 'r+') as archivo:
-        # Carga los datos del archivo
-        datos = json.load(archivo)
-        
-        # Busca al camper por su ID
-        for index, camper in enumerate(datos['campers']):
-            if camper['id'] == id_camper:
-                # Actualiza los datos del camper
-                datos['campers'][index].update(datos_actualizados)
+def actualizar_datos_camper():
+    with open("JSON/Campers.json", "r+") as editacion:
+        Data = json.load(editacion)
+        campers = Data["Campers"]
+        ID_camper = int(input("Ingresa el id del Camper que quieras actualizar: "))
+        for camper in campers:
+            if camper["ID"] == ID_camper:
+                # Solicitar los nuevos datos al usuario
+                camper["ID"] = input("Ingresa el nuevo numero de documento: ")
+                camper["nombres"] = input("Ingresa los nuevos nombres: ")
+                camper["apellido"] = input("Ingresa los nuevos apellidos: ")
+                camper["ciudad"] = input("Ingresa la nueva ciudad: ")
+                camper["Direccion"] = input("Ingrese la nueva direccion: ")
+                camper["Acudiente"] = input("Ingresa el nuevo nombre del acudiente: ")
+                camper["N_celular"] = input("Ingresa el nuevo numero de celular: ")
+                camper["N_fijo"] = input("Ingresa el nuevo numero de teléfono fijo: ")
+                camper["Estado"] = input("Ingresa el nuevo estado del camper: ")
+
                 
-                # Vuelve al principio del archivo
-                archivo.seek(0)
-                
-                # Escribe los datos actualizados en el archivo
-                json.dump(datos, archivo, indent=4)
-                
-                # Trunca el archivo para eliminar cualquier contenido previo
-                archivo.truncate()
-                return True  # Retorna True para indicar que la actualización fue exitosa
-    return False  # Retorna False si no se encontró el camper con el ID proporcionado
+                # Volver al principio del archivo y escribir los datos actualizados
+                editacion.seek(0)
+                json.dump(Data, editacion, indent=4)
+                editacion.truncate()
+                print("Los datos del camper han sido actualizados exitosamente.")
+                return
+        print("No se encontró un camper con el ID proporcionado.")
 
 def eliminar_camper(identificacion):
     file_path = 'JSON/Campers.json'
