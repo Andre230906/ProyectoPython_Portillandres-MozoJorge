@@ -17,47 +17,27 @@ def add_campers():
             *                    *
             **********************
             """)
-    # Cargar la lista de campers existente
-    file_path = 'JSON/Campers.json'
-    if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
-        with open(file_path, 'r') as archivo:
-            campers_existente = json.load(archivo)
-    else:
-        campers_existente = []
+    with open("JSON/Campers.json", "r") as outfile:
+        Data = json.load(outfile)
 
-    while True:
-        # Solicitar datos
-        C_id = input('Identificación: ')
-        C_names = input('Nombres: ')
-        C_lastName = input('Apellidos: ')
-        C_dirección = input('Dirección: ')
-        C_acudiente = input('Acudiente: ')
-        C_contactom = input('Celular: ')
-        C_contactof = input('Fijo: ')
-        C_estado = input('Estado: ')
-        C_riesgo = input('Riesgo: ')
 
-        # Añadir los nuevos datos a la lista de campers existente
-        nuevo_camper = {
-            "id": C_id,
-            "Nombres": C_names,
-            "Apellidos": C_lastName,
-            "Dirección": C_dirección,
-            "Acudiente": C_acudiente,
-            "Contacto celular": C_contactom,
-            "Contacto fijo": C_contactof,
-            "Estado": C_estado,
-            "Riesgo": C_riesgo
-        }
-        campers_existente.append(nuevo_camper)
+    nuevo_camper = {}
+    nuevo_camper["ID"] = int(input("*Ingrese el ID (numero de documento) del camper que deseas agregar: "))
+    nuevo_camper["nombres"] = input("*Ingrese los nombres del camper                                  : ")
+    nuevo_camper["apellido"] = input("*Ingresa los apellidos del camper                               : ")
+    nuevo_camper["ciudad"] = input("*Ingrese la ciudad del  camper que deseas agregar                 : ")
+    nuevo_camper["Direccion"] = input("*Ingrese la Dirección del camper que deseas agregar            : ")
+    nuevo_camper["Acudiente"] = input("*Ingrese El nombre del acudiente del nuevo camper              : ")
+    nuevo_camper["N_celular"] = input("*Ingrese el numero de celular del nuevo camper                 : ")
+    nuevo_camper["N_fijo"] = input("*Ingrese el numero de teléfono fijo del nuevo camper              : ")
+    nuevo_camper["Estado"] = "Inscrito"
 
-        respuesta = input("¿Desea añadir otro camper? (s/n): ")
-        if respuesta.lower() != "s":
-            break
+    Data["Campers"].append(nuevo_camper)
 
-    # Escribir la lista actualizada en el JSON
-    with open(file_path, 'w') as archivo:
-        json.dump(campers_existente, archivo, indent=4)
+    with open("JSON/Campers.json", "w") as outfile:
+        json.dump(Data, outfile, indent=4)
+        
+        
 
 
 def actualizar_datos_camper(id_camper, datos_actualizados):
@@ -93,12 +73,12 @@ def actualizar_datos_camper(id_camper, datos_actualizados):
 
 def eliminar_camper(identificacion):
     file_path = 'JSON/Campers.json'
-    if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
-        with open(file_path, 'r') as file:
-            campers = json.load(file)
+    if os.path.exists(file_path) and os.path.getsize(file_path) > 0: #Verifica si la ruta existe y si su tamaño es mayor que 0 para saber que no esta vacio
+        with open(file_path, 'r') as file: #modo lectur
+            campers = json.load(file) #
         
-        if isinstance(campers, dict):
-            if campers.get("id") == identificacion:
+        if isinstance(campers, dict): #verifica si es un dict
+            if campers.get("ID") == identificacion:
                 # Si el ID coincide, se elimina el camper
                 with open(file_path, 'w') as file:
                     file.write("{}")  # Escribir un JSON vacío para eliminar el contenido
@@ -122,10 +102,10 @@ def imprimir_todos_los_campers():
         with open('JSON/Campers.json', 'r') as archivo:
             # Carga los datos del archivo
             datos = json.load(archivo)
-            a=int(input("Ingresa (1) para continuar: "))
-            if a==1:
-                for camper in datos['campers']:
-                    print(f"ID: {camper['id']}, Nombres: {camper['nombres']}, Apellidos: {camper['apellidos']}")
+            a = int(input("Ingresa (1) para continuar: "))
+            if a == 1:
+                for camper in datos['Campers']:
+                    print(f"ID: {camper['ID']}, nombres: {camper['nombres']}, Apellido: {camper['apellido']}")
     except FileNotFoundError:
         print("Error: Archivo no encontrado.")
 

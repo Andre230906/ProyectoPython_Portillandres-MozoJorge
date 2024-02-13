@@ -1,11 +1,26 @@
 {
-  "id": "12",
-  "Nombres": "lkjh",
-  "Apellidos": "kjh",
-  "Direccion": "85",
-  "Acudiente": "85",
-  "Contacto celular": "85",
-  "Contacto fijo": "65",
-  "Estado": "5kbv",
-  "Riesgo": "lkmn"
+    "Campers": [
+        {
+            "ID": 1,
+            "nombres": "trtrtr",
+            "apellido": "yutu",
+            "ciudad": "yio",
+            "Direccion": "56",
+            "Acudiente": "fref",
+            "N_celular": "4354657689",
+            "N_fijo": "675698907",
+            "Estado": "En proceso de ingreso"
+        },
+        {
+            "ID": 1141114782,
+            "nombres": "Andres felipe",
+            "apellido": "Portilla amorocho",
+            "ciudad": "Barrancabermeja",
+            "Direccion": "Calle 55-35-41",
+            "Acudiente": "Paola Amorocho",
+            "N_celular": "3212931499",
+            "N_fijo": "600558745",
+            "Estado": "Inscrito"
+        }
+    ]
 }
