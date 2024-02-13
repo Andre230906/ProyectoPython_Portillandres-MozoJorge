@@ -2,11 +2,9 @@ import json
 import os
 def limpiar_terminal():
     if os.name=="nt":
-        os.system("clear")
+        os.system("cls")
     else:
         os.system("clear")
-
-
 
 def add_campers():
     limpiar_terminal()
@@ -21,70 +19,79 @@ def add_campers():
         Data = json.load(outfile)
 
 
-    nuevo_camper = {}
-    nuevo_camper["ID"] = int(input("*Ingrese el ID (numero de documento) del camper que deseas agregar: "))
-    nuevo_camper["nombres"] = input("*Ingrese los nombres del camper                                  : ")
-    nuevo_camper["apellido"] = input("*Ingresa los apellidos del camper                               : ")
-    nuevo_camper["ciudad"] = input("*Ingrese la ciudad del  camper que deseas agregar                 : ")
-    nuevo_camper["Direccion"] = input("*Ingrese la Dirección del camper que deseas agregar            : ")
-    nuevo_camper["Acudiente"] = input("*Ingrese El nombre del acudiente del nuevo camper              : ")
-    nuevo_camper["N_celular"] = input("*Ingrese el numero de celular del nuevo camper                 : ")
-    nuevo_camper["N_fijo"] = input("*Ingrese el numero de teléfono fijo del nuevo camper              : ")
-    nuevo_camper["Estado"] = "Inscrito"
+    newc = {}
+    newc["ID"] = int(input("*Ingrese el ID (numero de documento) del camper que deseas agregar: "))
+    newc["nombres"] = input("*Ingrese los nombres del camper                                   : ")
+    newc["apellido"] = input("*Ingresa los apellidos del camper                                 : ")
+    newc["ciudad"] = input("*Ingrese la ciudad del  camper que deseas agregar                 : ")
+    newc["Direccion"] = input("*Ingrese la Dirección del camper que deseas agregar               : ")
+    newc["Acudiente"] = input("*Ingrese El nombre del acudiente del nuevo camper                 : ")
+    newc["N_celular"] = input("*Ingrese el numero de celular del nuevo camper                    : ")
+    newc["N_fijo"] = input("*Ingrese el numero de teléfono fijo del nuevo camper              : ")
+    newc["Estado"] = "inscrito"
+    newc["Nota"] = "0"
 
-    Data["Campers"].append(nuevo_camper)
+    Data["Campers"].append(newc)
 
     with open("JSON/Campers.json", "w") as outfile:
         json.dump(Data, outfile, indent=4)
         
-        
-
-
 def actualizar_datos_camper():
-    with open("JSON/Campers.json", "r+") as editacion:
-        Data = json.load(editacion)
-        campers = Data["Campers"]
-        ID_camper = int(input("Ingresa el id del Camper que quieras actualizar: "))
-        for camper in campers:
-            if camper["ID"] == ID_camper:
-                # Solicitar los nuevos datos al usuario
-                camper["ID"] = input("Ingresa el nuevo numero de documento: ")
-                camper["nombres"] = input("Ingresa los nuevos nombres: ")
-                camper["apellido"] = input("Ingresa los nuevos apellidos: ")
-                camper["ciudad"] = input("Ingresa la nueva ciudad: ")
-                camper["Direccion"] = input("Ingrese la nueva direccion: ")
-                camper["Acudiente"] = input("Ingresa el nuevo nombre del acudiente: ")
-                camper["N_celular"] = input("Ingresa el nuevo numero de celular: ")
-                camper["N_fijo"] = input("Ingresa el nuevo numero de teléfono fijo: ")
-                camper["Estado"] = input("Ingresa el nuevo estado del camper: ")
+    edit = open("JSON/Campers.json")
+    Data = json.load(edit)
+    campers = Data["Campers"]
+    IDi_camper = int(input("Ingresa el id del Camper que quieras actualizar: "))
+    for camper in campers:
+        if camper["ID"] == IDi_camper:
+            
+            nombres = input("Ingresa los nuevos nombres: ") 
+            apellidos = input("Ingresa los nuevos apellidos: ")
+            ciudad = input("Ingresa la ciudad a cambiar: ")
+            Direccion = input("Ingrese la direccion a cambiar: ")
+            Acudiente = input("Ingresa el acudiente a cambiar : ")
+            N_celular = input("Ingresa el nuevo numero de celular: ")
+            N_fijo = input("Ingresa el nuevo numero de teléfono fijo: ")
+            
+            camper["nombres"] = nombres
+            camper["apellido"] = apellidos
+            camper["ciudad"] = ciudad
+            camper["Direccion"] = Direccion
+            camper["Acudiente"] = Acudiente
+            camper["N_celular"] = N_celular
+            camper["N_fijo"] = N_fijo
+            camper["Estado"] = N_fijo
 
-                
-                # Volver al principio del archivo y escribir los datos actualizados
-                editacion.seek(0)
-                json.dump(Data, editacion, indent=4)
-                editacion.truncate()
-                print("Los datos del camper han sido actualizados exitosamente.")
-                return
-        print("No se encontró un camper con el ID proporcionado.")
+    
+    with open("JSON/Campers.json", "w") as outfile:
+        json.dump(Data, outfile, indent=4)
 
-def eliminar_camper(identificacion):
-    file_path = 'JSON/Campers.json'
-    if os.path.exists(file_path) and os.path.getsize(file_path) > 0: #Verifica si la ruta existe y si su tamaño es mayor que 0 para saber que no esta vacio
-        with open(file_path, 'r') as file: #modo lectur
-            campers = json.load(file) #
-        
-        if isinstance(campers, dict): #verifica si es un dict
-            if campers.get("ID") == identificacion:
-                # Si el ID coincide, se elimina el camper
-                with open(file_path, 'w') as file:
-                    file.write("{}")  # Escribir un JSON vacío para eliminar el contenido
-                print(f"Camper con identificación {identificacion} eliminado correctamente.")
+
+def ev_camper():
+    edit = open("JSON/Campers.json")
+    Dat = json.load(edit)
+    camp = Dat["Campers"]
+    ID_camper = int(input("Ingrese el número de identificación del camper que desea hallar su calificacion final:"))
+    for camp in camp:
+        if camp["ID"] == ID_camper:  
+            teo = float(input("Ingrese promedio de notas de la teorica: "))
+            pra = float(input("Ingrese promedio de notas de la practica: "))
+            pro = float(input("Ingrese promedio da la procedimental: "))
+            final = (teo *  0.3) + (pra *  0.6) + (pro *  0.1)
+            if final >=  60:
+                camp['Estado'] = "Continua"  
+                camp["nota"] = ("",final) 
+                print("¡Este camper ha aprobado el filtro mensual con una nota final de", final)
             else:
-                print(f"No se encontró ningún camper con la identificación {identificacion}.")
+                camp['Estado'] = "Reprobado"   
+                camp["nota"] = ("",final)
+                print("El camper no ha aprobado, Su nota final es", final)
         else:
-            print("El archivo de campers no contiene un objeto JSON en el formato esperado.")
-    else:
-        print("El archivo de campers está vacío o no existe.")
+            print("Camper no encontrado.")     
+                         
+                    
+                      
+    with open("JSON/Campers.json", "w") as outfile:
+        json.dump(Dat, outfile, indent=4)
 
 def imprimir_todos_los_campers():
     print("""
@@ -126,7 +133,7 @@ def camper_menu():
             *********************
             """)
         print("*Agregar Camper    (1)")
-        print("*Eliminar Camper   (2)")
+        print("*Notas Camper      (2)")
         print("*Actualizar Camper (3)")
         print("*Listar Campers    (4)")
         print("*Atras             (5)")
@@ -135,16 +142,15 @@ def camper_menu():
         
         opciones_dict = {
             1: add_campers,
-            2: lambda: eliminar_camper(input("Ingrese el ID del camper a eliminar: ")),
-            3: lambda: actualizar_datos_camper(input("Ingrese el ID del camper a actualizar: "), 
-                                       eval(input("Ingrese los datos actualizados del camper en formato de diccionario: "))),
+            2: ev_camper,
+            3: actualizar_datos_camper ,
             4: imprimir_todos_los_campers,
             5: lambda: print("Saliendo del menú de administración.")
         }
         
         if opcion.isdigit() and int(opcion) in range(1,  6):
             opciones_dict[int(opcion)]()
-        elif opcion.lower() == '5':
+        elif opcion.lower() == '0':
             print("Saliendo del menú de administración.")
             break
         else:
