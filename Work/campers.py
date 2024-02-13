@@ -105,7 +105,17 @@ def imprimir_todos_los_campers():
             a = int(input("Ingresa (1) para continuar: "))
             if a == 1:
                 for camper in datos['Campers']:
-                    print(f"ID: {camper['ID']}, nombres: {camper['nombres']}, Apellido: {camper['apellido']}")
+                    print("ID: ", camper['ID']) # Agrega una línea en blanco entre cada camper
+                    print("Nombres: ", camper['nombres'])
+                    print("Apellido:", camper['apellido'])
+                    print("Ciudad:", camper['ciudad'])
+                    print("Direccion:", camper['Direccion'])
+                    print("Acudiente:", camper['Acudiente'])
+                    print("N_celular:", camper['N_celular'])
+                    print("N_fijo:", camper['N_fijo'])
+                    print("Estado:", camper['Estado'])
+
+                  # print(f"ID: {camper['ID']}, nombres: {camper['nombres']}, Apellido: {camper['apellido']}, ciudad: {camper['ciudad']}, direccion: {camper['Direccion']}, Acudiente: {camper['Acudiente']}, Ncelular: {camper['N_celular']}, Nfijo: {camper['N_fijo']}, Estado: {camper['Estado']}")
     except FileNotFoundError:
         print("Error: Archivo no encontrado.")
 
