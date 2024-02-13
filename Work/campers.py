@@ -110,6 +110,7 @@ def imprimir_todos_los_campers():
                     print("N_celular:", camper['N_celular'])
                     print("N_fijo:", camper['N_fijo'])
                     print("Estado:", camper['Estado'])
+                    print("")
 
                   # print(f"ID: {camper['ID']}, nombres: {camper['nombres']}, Apellido: {camper['apellido']}, ciudad: {camper['ciudad']}, direccion: {camper['Direccion']}, Acudiente: {camper['Acudiente']}, Ncelular: {camper['N_celular']}, Nfijo: {camper['N_fijo']}, Estado: {camper['Estado']}")
     except FileNotFoundError:
