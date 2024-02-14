@@ -15,9 +15,14 @@ def add_campers():
             *                    *
             **********************
             """)
+    
+    edad = int(input("Ingrese la edad del camper: "))
+    if edad < 16 or edad > 28:
+        print("Lo siento, el camper debe tener entre 16 y 28 años para ser registrado.")
+        return  # Volver al inicio del menú
+    
     with open("JSON/Campers.json", "r") as outfile:
         Data = json.load(outfile)
-
 
     newc = {}
     newc["ID"] = int(input("*Ingrese el ID (numero de documento) del camper que deseas agregar: "))
@@ -29,14 +34,22 @@ def add_campers():
     newc["N_celular"] = input("*Ingrese el numero de celular del nuevo camper                    : ")
     newc["N_fijo"] = input("*Ingrese el numero de teléfono fijo del nuevo camper              : ")
     newc["Estado"] = "inscrito"
-    newc["Nota"] = "0"
+    newc["Nota"] = "1"
 
     Data["Campers"].append(newc)
 
     with open("JSON/Campers.json", "w") as outfile:
         json.dump(Data, outfile, indent=4)
+
         
 def actualizar_datos_camper():
+    print("""
+            **********************
+            *                    *
+            *ACTUALIZAR  CAMPERS *
+            *                    *
+            **********************
+            """)
     edit = open("JSON/Campers.json")
     Data = json.load(edit)
     campers = Data["Campers"]
@@ -65,8 +78,14 @@ def actualizar_datos_camper():
     with open("JSON/Campers.json", "w") as outfile:
         json.dump(Data, outfile, indent=4)
 
-
 def ev_camper():
+    print("""
+            **********************
+            *                    *
+            *  NOTAS    CAMPERS  *
+            *                    *
+            **********************
+            """)
     edit = open("JSON/Campers.json")
     Dat = json.load(edit)
     camp = Dat["Campers"]
@@ -103,7 +122,6 @@ def imprimir_todos_los_campers():
             """)
     try:
         with open('JSON/Campers.json', 'r') as archivo:
-            # Carga los datos del archivo
             datos = json.load(archivo)
             a = int(input("Ingresa (1) para continuar: "))
             if a == 1:
@@ -123,6 +141,35 @@ def imprimir_todos_los_campers():
     except FileNotFoundError:
         print("Error: Archivo no encontrado.")
 
+def listar_campers_por_estado(estado):
+    with open('JSON/Campers.json') as f:
+        data = json.load(f)
+        campers = data['Campers']
+
+    campers_segun_estado = [camper for camper in campers if camper['Estado'] == estado]
+
+    if campers_segun_estado:
+        print(f"Campers con estado '{estado}':")
+        for camper in campers_segun_estado:
+            print("")
+            print("ID:", camper['ID'])
+            print("Nombre:", camper['nombres'])
+            print("Apellido:", camper['apellido'])
+            print("Ciudad:", camper['ciudad'])
+            print("Dirección:", camper['Direccion'])
+            print("Acudiente:", camper['Acudiente'])
+            print("Número celular:", camper['N_celular'])
+            print("Número fijo:", camper['N_fijo'])
+            print("Estado:", camper['Estado'])
+            print("Nota:", camper['nota'])
+            print()  # Imprimir una línea en blanco entre cada camper
+    else:
+        print(f"No hay campers con estado '{estado}'.")
+
+def listar_campers_por_estado_opcion():
+    estado = input("Ingrese el estado para listar campers: ")
+    listar_campers_por_estado(estado)
+
 def camper_menu():
     while True:   
         print("""
@@ -136,7 +183,8 @@ def camper_menu():
         print("*Notas Camper      (2)")
         print("*Actualizar Camper (3)")
         print("*Listar Campers    (4)")
-        print("*Atras             (5)")
+        print("*Listar por Estado (5)")
+        print("*Atras             (6)")
         
         opcion = input("Ingrese la opción deseada: ")
         
@@ -145,10 +193,11 @@ def camper_menu():
             2: ev_camper,
             3: actualizar_datos_camper ,
             4: imprimir_todos_los_campers,
-            5: lambda: print("Saliendo del menú de administración.")
+            5: listar_campers_por_estado_opcion,
+            6: lambda: print("Saliendo del menú de administración.")
         }
         
-        if opcion.isdigit() and int(opcion) in range(1,  6):
+        if opcion.isdigit() and int(opcion) in range(1,7):
             opciones_dict[int(opcion)]()
         elif opcion.lower() == '0':
             print("Saliendo del menú de administración.")

@@ -9,8 +9,11 @@
             "Acudiente": "esperanza",
             "N_celular": "3204559894",
             "N_fijo": "7528542",
-            "Estado": "7528542",
-            "nota": "0"
+            "Estado": "Continua",
+            "nota": [
+                "",
+                72.7
+            ]
         },
         {
             "ID": 1141114782,
@@ -47,6 +50,18 @@
             "N_fijo": "454545445",
             "Estado": "Inscrito",
             "nota": 38.8
+        },
+        {
+            "ID": 1005372158,
+            "nombres": "juan camilo",
+            "apellido": "Agreda Delgado",
+            "ciudad": "bucaramanga",
+            "Direccion": "zapamanga etapa 1",
+            "Acudiente": "Esperanza",
+            "N_celular": "3162418192",
+            "N_fijo": "60000000",
+            "Estado": "inscrito",
+            "Nota": "1"
         }
     ]
 }
