@@ -9,59 +9,33 @@
             "Acudiente": "esperanza",
             "N_celular": "3204559894",
             "N_fijo": "7528542",
-            "Estado": "Continua",
+            "Estado": "Aprobado",
             "nota": [
                 "",
-                72.7
-            ]
+                80.0
+            ],
+            "Ruta General": "NetCore",
+            "Ruta Especifica": "Continua",
+            "Salon": "Sputnik",
+            "Grupo": "Continua"
+
         },
         {
-            "ID": 1141114782,
-            "nombres": "Andres felipe",
-            "apellido": "Portilla amorocho",
-            "ciudad": "Barrancabermeja",
-            "Direccion": "Calle 55-35-41",
-            "Acudiente": "Paola Amorocho",
-            "N_celular": "3212931499",
-            "N_fijo": "600558745",
-            "Estado": "Reprobado",
-            "nota": "0"
-        },
-        {
-            "ID": 1097184782,
-            "nombres": "Juan Diego",
-            "apellido": "Rey Garcia",
-            "ciudad": "El centro",
-            "Direccion": "quebrada cerca al centro",
-            "Acudiente": "Pato",
-            "N_celular": "3212931499",
-            "N_fijo": "6005782",
-            "Estado": "Reprobado",
-            "nota": "0"
-        },
-        {
-            "ID": 74,
-            "nombres": "andres",
-            "apellido": "juancho",
-            "ciudad": "barrancayork",
-            "Direccion": "zapamanga 2",
-            "Acudiente": "pablo",
-            "N_celular": "708554",
-            "N_fijo": "454545445",
-            "Estado": "Inscrito",
-            "nota": 38.8
-        },
-        {
-            "ID": 1005372158,
-            "nombres": "juan camilo",
-            "apellido": "Agreda Delgado",
-            "ciudad": "bucaramanga",
-            "Direccion": "zapamanga etapa 1",
-            "Acudiente": "Esperanza",
-            "N_celular": "3162418192",
-            "N_fijo": "60000000",
-            "Estado": "inscrito",
-            "Nota": "1"
+            "ID": 7,
+            "nombres": "sebas",
+            "apellido": "julian",
+            "ciudad": "sjaksja",
+            "Direccion": "sakjskjakjs",
+            "Acudiente": "sajksjajks",
+            "N_celular": "585254",
+            "N_fijo": "852852",
+            "Estado": "Aprobado",
+            "Nota": "1",
+            "Ruta General": "a",
+            "Ruta Especifica": "Contina",
+            "Salon": "Salon-2",
+            "Grupo": "Continua"
+
         }
     ]
 }

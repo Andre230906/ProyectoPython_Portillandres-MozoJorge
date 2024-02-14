@@ -35,14 +35,20 @@ def add_campers():
     newc["N_fijo"] = input("*Ingrese el numero de teléfono fijo del nuevo camper              : ")
     newc["Estado"] = "inscrito"
     newc["Nota"] = "1"
+    newc["Ruta General"] = "a"
+    newc["Ruta Especifica"] = "a"
+    newc["Salon"] = "a"
+    newc["Grupo"] = "a"
+
+
 
     Data["Campers"].append(newc)
 
     with open("JSON/Campers.json", "w") as outfile:
         json.dump(Data, outfile, indent=4)
-
-        
+      
 def actualizar_datos_camper():
+    limpiar_terminal()
     print("""
             **********************
             *                    *
@@ -79,6 +85,7 @@ def actualizar_datos_camper():
         json.dump(Data, outfile, indent=4)
 
 def ev_camper():
+    limpiar_terminal()
     print("""
             **********************
             *                    *
@@ -97,15 +104,16 @@ def ev_camper():
             pro = float(input("Ingrese promedio da la procedimental: "))
             final = (teo *  0.3) + (pra *  0.6) + (pro *  0.1)
             if final >=  60:
-                camp['Estado'] = "Continua"  
-                camp["nota"] = ("",final) 
-                print("¡Este camper ha aprobado el filtro mensual con una nota final de", final)
+                    camp['Estado'] = "Aprobado"  
+                    camp["nota"] = ("",final) 
+                    print("¡Este camper ha aprobado el filtro mensual con una nota final de", final)
             else:
-                camp['Estado'] = "Reprobado"   
-                camp["nota"] = ("",final)
-                print("El camper no ha aprobado, Su nota final es", final)
+                    camp['Estado'] = "Reprobado"   
+                    camp["nota"] = "la nota es",final
+                    print("El camper no ha aprobado, Su nota final es", final)
         else:
-            print("Camper no encontrado.")     
+           print("Camper no encontrado.")  
+           break   
                          
                     
                       
@@ -113,6 +121,7 @@ def ev_camper():
         json.dump(Dat, outfile, indent=4)
 
 def imprimir_todos_los_campers():
+    limpiar_terminal()
     print("""
             **********************
             *                    *
@@ -142,6 +151,14 @@ def imprimir_todos_los_campers():
         print("Error: Archivo no encontrado.")
 
 def listar_campers_por_estado(estado):
+    limpiar_terminal()
+    print("""
+            **********************
+            *                    *
+            * LISTAR POR ESTADO  *
+            *                    *
+            **********************
+            """)
     with open('JSON/Campers.json') as f:
         data = json.load(f)
         campers = data['Campers']
@@ -170,8 +187,86 @@ def listar_campers_por_estado_opcion():
     estado = input("Ingrese el estado para listar campers: ")
     listar_campers_por_estado(estado)
 
+def modificar_ruta_general(ruta_json):
+    limpiar_terminal()
+    print("""
+            **********************
+            *                    *
+            *  MODIFICAR  RUTA   *
+            *                    *
+            **********************
+            """)    
+    camper_id = int(input("Ingrese el ID del camper: "))
+
+    with open(ruta_json, 'r') as file:
+        data = json.load(file)
+        campers = data['Campers']
+
+        for camper in campers:
+            if camper['ID'] == camper_id:
+                print("Rutas de Entrenamiento Disponibles:")
+                print("1. Java")
+                print("2. NodeJS")
+                print("3. NetCore")
+
+                opcion = int(input("Seleccione la ruta de entrenamiento (1, 2 o 3): "))
+
+                if opcion == 1:
+                    camper['Ruta General'] = "Java"
+                elif opcion == 2:
+                    camper['Ruta General'] = "NodeJS"
+                elif opcion == 3:
+                    camper['Ruta General'] = "NetCore"
+                else:
+                    print("Opción no válida. Por favor seleccione 1, 2 o 3.")
+                    return
+
+        with open(ruta_json, 'w') as file:
+            json.dump(data, file, indent=4)
+
+    ruta_json = 'JSON/Campers.json'
+
+
+def asignar_a_salon(camper, salones):
+    for salon in salones:
+        if salones[salon] < 33:  # Verifica si el salón tiene capacidad
+            if camper["Estado"] == "Aprobado":  # Verifica si el estado del camper es "Aprobado"
+                if camper["Ruta General"] == "NetCore":
+                    camper["Salon"] = "Sputnik"
+                elif camper["Ruta General"] == "Java":
+                    camper["Salon"] = "Artemis"
+                elif camper["Ruta General"] == "NodeJS":
+                    camper["Salon"] = "Apollo"
+                else:
+                    nuevo_salon = f"Salon-{len(salones) + 1}"
+                    camper["Salon"] = nuevo_salon
+                    salones[nuevo_salon] = 1
+                salones[camper["Salon"]] += 1  # Incrementa la cantidad de campers en el salón correspondiente
+                print(f"El camper con ID {camper['ID']} ha sido asignado al salón {camper['Salon']}.")
+                return
+    # Si no se encontró ningún salón con capacidad, se crea uno nuevo
+    nuevo_salon = f"Salon-{len(salones) + 1}"
+    camper["Salon"] = nuevo_salon
+    salones[nuevo_salon] = 1  # Se agrega el nuevo salón a la lista de salones y se asigna el camper a este nuevo salón
+    print(f"El camper con ID {camper['ID']} ha sido asignado al nuevo salón {camper['Salon']}.")
+
+def asignar_campers_a_salones(file_path):
+    with open(file_path) as file:
+        data = json.load(file)
+
+    campers = data["Campers"]
+    salones = {"Sputnik": 30}  # Ejemplo de salón con capacidad inicial
+
+    for camper in campers:
+        asignar_a_salon(camper, salones)
+
+    data["Campers"] = campers
+    with open(file_path, 'w') as file:
+        json.dump(data, file, indent=4)
+        
+
 def camper_menu():
-    while True:   
+    while True:
         print("""
             *********************
             *                   *
@@ -184,26 +279,33 @@ def camper_menu():
         print("*Actualizar Camper (3)")
         print("*Listar Campers    (4)")
         print("*Listar por Estado (5)")
-        print("*Atras             (6)")
-        
+        print("*Modificar Ruta    (6)")
+        print("*Asignar Salones   (7)")  # Nueva opción para asignar campers a salones
+        print("*Atras             (8)")
+
         opcion = input("Ingrese la opción deseada: ")
-        
+
         opciones_dict = {
             1: add_campers,
             2: ev_camper,
-            3: actualizar_datos_camper ,
+            3: actualizar_datos_camper,
             4: imprimir_todos_los_campers,
             5: listar_campers_por_estado_opcion,
-            6: lambda: print("Saliendo del menú de administración.")
+            6: modificar_ruta_general,
+            7: asignar_campers_a_salones,  # Llama a la función que asigna campers a salones
+            8: lambda: print("Saliendo del menú de administración.")
         }
-        
-        if opcion.isdigit() and int(opcion) in range(1,7):
-            opciones_dict[int(opcion)]()
+
+        if opcion.isdigit() and int(opcion) in range(1, 9):
+            if int(opcion) == 7:
+                opciones_dict[int(opcion)]('JSON/Campers.json')  # Pasa el archivo JSON como argumento a la función seleccionada
+            else:
+                opciones_dict[int(opcion)]()
         elif opcion.lower() == '0':
             print("Saliendo del menú de administración.")
             break
         else:
-            print("Ingrese una opción válida (1-5).")
+            print("Ingrese una opción válida (1-8).")
             continue
 
 camper_menu()
