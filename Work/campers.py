@@ -42,6 +42,8 @@ def add_campers():
     newc["Salon"] = "a"
     newc["Grupo"] = "a"
     newc["Modulo"] = "a"
+    newc["Profesor"] = "a"
+
 
 
 
@@ -151,7 +153,6 @@ def imprimir_todos_los_campers():
                     print("N_celular:", camper['N_celular'])
                     print("N_fijo:", camper['N_fijo'])
                     print("Estado:", camper['Estado'])
-                    print("nota:", camper['nota'])
                     print("Ruta General:", camper['Ruta General'])
                     print("Ruta Especifica:", camper['Ruta Especifica'])
                     print("Salon:", camper['Salon'])
@@ -190,7 +191,6 @@ def listar_campers_por_estado(estado):
             print("Número celular:", camper['N_celular'])
             print("Número fijo:", camper['N_fijo'])
             print("Estado:", camper['Estado'])
-            print("Nota:", camper['nota'])
             print()  # Imprimir una línea en blanco entre cada camper
     else:
         print(f"No hay campers con estado '{estado}'.")
@@ -225,10 +225,18 @@ def modificar_ruta_general(ruta_json):
 
                 if opcion == 1:
                     camper['Ruta General'] = "Java"
+                    camper['profesor'] = "Pedro"
+                    print(f"El estudiante con el {camper_id} ha sido asignado a la ruta Java con el profesor pedro")
+
                 elif opcion == 2:
                     camper['Ruta General'] = "NodeJS"
+                    camper['profesor'] = "Jholbert"
+                    print(f"El estudiante con el {camper_id} ha sido asignado a la ruta NodeJS con el profesor Jholbert")
+
                 elif opcion == 3:
                     camper['Ruta General'] = "NetCore"
+                    camper['profesor'] = "Miguel"
+                    print(f"El estudiante con el {camper_id} ha sido asignado a la ruta NetCore con el profesor Miguel")
                 else:
                     print("Opción no válida. Por favor seleccione 1, 2 o 3.")
                     return
@@ -236,9 +244,15 @@ def modificar_ruta_general(ruta_json):
         with open(ruta_json, 'w') as file:
             json.dump(data, file, indent=4)
 
-    ruta_json = 'JSON/Campers.json'
-
 def asignar_horario_a_camper():
+    limpiar_terminal()
+    print("""
+            **********************
+            *                    *
+            * ASIGNAR  HORARIO   *
+            *                    *
+            **********************
+            """)
     with open("JSON/Campers.json", "r") as edit:
         data = json.load(edit)
     campers = data["Campers"]
@@ -332,9 +346,22 @@ def asignar_horario_a_camper():
     with open("JSON/Campers.json", "w") as outfile:
         json.dump(data, outfile, indent=4)
 
+def limpiar_terminal():
+    # Define la función limpiar_terminal según tus necesidades
+    pass
+
 def asignar_a_salon(camper, salones):
+    limpiar_terminal()
+    print("""
+            **********************
+            *                    *
+            *   SALON ASIGNADO   *
+            *                    *
+            **********************
+            """)
+
     for salon in salones:
-        if salones[salon] < 33:  # Verifica si el salón tiene capacidad
+        if 16 < salones[salon] < 33:  # Verifica si el salón tiene capacidad
             if camper["Estado"] == "Aprobado":  # Verifica si el estado del camper es "Aprobado"
                 if camper["Ruta General"] == "NetCore":
                     camper["Salon"] = "Sputnik"
@@ -354,8 +381,33 @@ def asignar_a_salon(camper, salones):
     camper["Salon"] = nuevo_salon
     salones[nuevo_salon] = 1  # Se agrega el nuevo salón a la lista de salones y se asigna el camper a este nuevo salón
     print(f"El camper con ID {camper['ID']} ha sido asignado al nuevo salón {camper['Salon']}.")
+    
+
+def asignar_campers_a_salones(file_path):
+    with open(file_path) as file:
+        data = json.load(file)
+
+    campers = data["Campers"]
+    salones = {"Sputnik": 30}  # Ejemplo de salón con capacidad inicial
+
+    for camper in campers:
+        asignar_a_salon(camper, salones)
+
+    data["Campers"] = campers
+    with open(file_path, 'w') as file:
+        json.dump(data, file, indent=4)
+
+
 
 def agregar_modulos_a_camper_desde_consola():
+    limpiar_terminal()
+    print("""
+            **********************
+            *                    *
+            *   ASIGNAR MODULO   *
+            *                    *
+            **********************
+            """)
     modulos_disponibles = [
         "Fundamentos de Programacion",
         "Programacion Web (HTML, CSS, B)",
@@ -406,21 +458,15 @@ def agregar_modulos_a_camper_desde_consola():
         print(f"No se encontró un camper con el ID {id_camper}")
         
 
-def asignar_campers_a_salones(file_path):
-    with open(file_path) as file:
-        data = json.load(file)
-
-    campers = data["Campers"]
-    salones = {"Sputnik": 30}  # Ejemplo de salón con capacidad inicial
-
-    for camper in campers:
-        asignar_a_salon(camper, salones)
-
-    data["Campers"] = campers
-    with open(file_path, 'w') as file:
-        json.dump(data, file, indent=4)
-
 def asignar_horario_a_camper():
+    limpiar_terminal()
+    print("""
+            **********************
+            *                    *
+            *HORARIOS DE  CAMPERS*
+            *                    *
+            **********************
+            """)
     with open("JSON/Campers.json", "r") as edit:
         data = json.load(edit)
     campers = data["Campers"]
@@ -514,7 +560,97 @@ def asignar_horario_a_camper():
     with open("JSON/Campers.json", "w") as outfile:
         json.dump(data, outfile, indent=4)
 
-def camper_menu():
+def imprimir_un_campers():
+    limpiar_terminal()
+    print("""
+            **********************
+            *                    *
+            *   MOSTRAR DATOS    *
+            *                    *
+            **********************
+            """)
+    try:
+                edit = open("JSON/Campers.json")
+                Dat = json.load(edit)
+                camp = Dat["Campers"]
+                ID_camper = int(input("Ingrese el número de identificación del camper que desea hallar sus datos:"))
+                for camp in camp:
+                    if camp["ID"] == ID_camper:  
+                        print("ID: ", camp['ID'])
+                        print("Nombres: ", camp['nombres'])
+                        print("Apellido:", camp['apellido'])
+                        print("Ciudad:", camp['ciudad'])
+                        print("Direccion:", camp['Direccion'])
+                        print("Acudiente:", camp['Acudiente'])
+                        print("N_celular:", camp['N_celular'])
+                        print("N_fijo:", camp['N_fijo'])
+                        print("Estado:", camp['Estado'])
+                        print("Ruta General:", camp['Ruta General'])
+                        print("Ruta Especifica:", camp['Ruta Especifica'])
+                        print("Salon:", camp['Salon'])
+                        print("Grupo:", camp['Grupo'])
+                        print("")
+                    else:
+                        print("No se encontró el ID en la lista.")
+
+    except FileNotFoundError:
+        print("Error: Archivo no encontrado.")
+
+def listar_profesor(profe):
+    print("""
+            **********************
+            *                    *
+            * PROFESOR LISTADO   *
+            *                    *
+            **********************
+            """)
+    with open('JSON/Campers.json') as f:
+        data = json.load(f)
+        campers = data['Campers']
+
+    campers_segun_estado = [camper for camper in campers if camper['profesor'] == profe]
+
+    if campers_segun_estado:
+        print(f"El profesor '{profe}' cuenta con los siguientes datos:")
+        for camper in campers_segun_estado:
+            print("")
+            print("Ruta:", camper['Ruta General'])
+            print("Salon:", camper['Salon'])
+            print("Grupo:", camper['Grupo'])
+            print("Modulo:", camper['Modulo'])
+            print() 
+    else:
+        print(f"No se encontro el  Profesor '{profe}'.\nIntente de nuevo.")
+
+def listar_profesordatos():
+    profe = input("Ingrese el profesor para ver los datos: ")
+    listar_profesor(profe)
+
+def menu_profesor():
+    while True:
+        print("""
+                **********************
+                *                    *
+                *       TRAINER      *
+                *                    *
+                **********************
+                """)
+        print("TRAINER EXISTENTES:")
+        print("1. Pedro")
+        print("2. Jholbert")
+        print("3. Miguel")
+        
+        opcion = input("Ingrese la 's' para continuar o 'q' para salir: ")
+
+        if opcion.lower() == 'q':
+            menu_principal()
+        elif opcion.lower() == 's':
+            listar_profesordatos()
+        else:
+            print("Opción no válida. Por favor seleccione 1, 2, 3 o 'q' para salir.")
+
+def admin_menu():
+    file_path = 'JSON/Campers.json'
 
     while True:
         print("""
@@ -530,10 +666,10 @@ def camper_menu():
         print("*Listar Campers       (4)")
         print("*Listar por Estado    (5)")
         print("*Modificar Ruta       (6)")
-        print("*Asignar Salones      (7)")  # Nueva opción para asignar campers a salones
+        print("*Asignar Salones      (7)")  
         print("*Asignar Hora/Grupo   (8)")
-        print("*Agregar Modulo       (9)")  # Nueva opción para asignar horario a camper# Nueva opción para asignar horario a camper
-        print("*Atras                (10)")
+        print("*Agregar Modulo       (9)")  
+        print("*Menu principal       (10)")
 
         opcion = input("Ingrese la opción deseada: ")
 
@@ -544,22 +680,81 @@ def camper_menu():
             4: imprimir_todos_los_campers,
             5: listar_campers_por_estado_opcion,
             6: modificar_ruta_general,
-            7: asignar_campers_a_salones,  # Llama a la función que asigna campers a salones
+            7: lambda: asignar_campers_a_salones(file_path),
             8: asignar_horario_a_camper,
             9: agregar_modulos_a_camper_desde_consola,# Llama a la función que asigna horario a camper
-            10: lambda: print("Saliendo del menú de administración.")
+            10: menu_principal
         }
 
-        if opcion.isdigit() and int(opcion) in range(1, 10):
-            if int(opcion) in [7, 8]:
+        if opcion.isdigit() and int(opcion) in range(1, 11):
+            if int(opcion) in [10, 11]:
                 opciones_dict[int(opcion)]('JSON/Campers.json')  # Pasa el archivo JSON como argumento a la función seleccionada
             else:
                 opciones_dict[int(opcion)]()
-        elif opcion.lower() == '0':
-            print("Saliendo del menú de administración.")
-            break
+
         else:
-            print("Ingrese una opción válida (1-9).")
+            print("Ingrese una opción válida (1-10).")
             continue
 
-camper_menu()
+def camper_menu():
+
+    while True:
+        print("""
+            *********************
+            *                   *
+            *    MENU CAMPER    *
+            *                   *
+            *********************
+            """)
+        print("*Camper por id       (1)")
+        print("*Notas Camper         (2)")
+        print("*Menu principal       (3)")
+  
+
+        opcion = input("Ingrese la opción deseada: ")
+
+        opciones_dict = {
+            1: imprimir_un_campers,
+            2: actualizar_datos_camper,
+            3: menu_principal,
+
+        }
+
+        if opcion.isdigit() and int(opcion) in range(1, 3):
+            if int(opcion) in [9, 10]:
+                opciones_dict[int(opcion)]('JSON/Campers.json')  # Pasa el archivo JSON como argumento a la función seleccionada
+            else:
+                opciones_dict[int(opcion)]()
+        else:
+            print("Ingrese una opción válida (1-3).")
+            continue
+
+
+def menu_principal():
+    while True:
+        print("""
+                **********************
+                *    MENÚ PRINCIPAL  *
+                **********************
+                """)
+        print("Seleccione una opción:")
+        print("1. Menú Profesor")
+        print("2. Menú Admin")
+        print("3. Menú Camper")
+        print("4. Salir")
+
+        opcion = input("Ingrese el número de la opción (1, 2, 3 o 4): ")
+
+        if opcion == '1':
+            menu_profesor()  # Llamada a la función menu_profesor
+        elif opcion == '2':
+            admin_menu()  # Llamada a la función admin_menu
+        elif opcion == '3':
+            camper_menu()  # Llamada a la función camper_menu
+        elif opcion == '4':
+            print("Saliendo del programa.")
+            break
+        else:
+            print("Opción no válida. Por favor seleccione 1, 2, 3 o 4.")
+# Ejemplo de uso del menú principal
+menu_principal()

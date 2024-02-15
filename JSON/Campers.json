@@ -12,7 +12,7 @@
             "Estado": "Aprobado",
             "nota": [
                 "",
-                78.3
+                86.5
             ],
             "Ruta General": "NetCore",
             "Ruta Especifica": "Continua",
@@ -22,7 +22,8 @@
                 "Fundamentos de Programacion",
                 "Backend",
                 "Programacion Web (HTML, CSS, B)"
-            ]
+            ],
+            "profesor": "Pedro"
         },
         {
             "ID": 7,
@@ -39,7 +40,8 @@
             "Ruta Especifica": "Contina",
             "Salon": "Salon-2",
             "Grupo": "Continua",
-            "Modulo": "P3"
+            "Modulo": "P3",
+            "profesor": "Continua"
         }
     ]
 }
