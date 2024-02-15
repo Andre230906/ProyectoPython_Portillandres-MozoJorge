@@ -32,13 +32,16 @@ def add_campers():
     newc["Direccion"] = input("*Ingrese la Dirección del camper que deseas agregar               : ")
     newc["Acudiente"] = input("*Ingrese El nombre del acudiente del nuevo camper                 : ")
     newc["N_celular"] = input("*Ingrese el numero de celular del nuevo camper                    : ")
-    newc["N_fijo"] = input("*Ingrese el numero de teléfono fijo del nuevo camper              : ")
+    newc["N_fijo"] = input("*Ingrese el numero de teléfono fijo del nuevo camper               : ")
+    newc["N_fijo"] = input("*Ingrese la fecha de inicio del camper                             : ")
+    newc["N_fijo"] = input("*Ingrese la fecha final del camper                                 : ")
     newc["Estado"] = "inscrito"
     newc["Nota"] = "1"
     newc["Ruta General"] = "a"
     newc["Ruta Especifica"] = "a"
     newc["Salon"] = "a"
     newc["Grupo"] = "a"
+    newc["Modulo"] = "a"
 
 
 
@@ -103,14 +106,18 @@ def ev_camper():
             pra = float(input("Ingrese promedio de notas de la practica: "))
             pro = float(input("Ingrese promedio da la procedimental: "))
             final = (teo *  0.3) + (pra *  0.6) + (pro *  0.1)
-            if final >=  60:
+            if final >=  65:
                     camp['Estado'] = "Aprobado"  
                     camp["nota"] = ("",final) 
                     print("¡Este camper ha aprobado el filtro mensual con una nota final de", final)
+            elif final >59 & final < 65:
+                    camp['Estado'] = "Bajo rendimiento"   
+                    camp["nota"] = "la nota es",final
+                    print("El camper esta en riego, Su nota final es", final)
             else:
                     camp['Estado'] = "Reprobado"   
                     camp["nota"] = "la nota es",final
-                    print("El camper no ha aprobado, Su nota final es", final)
+                    print("El camper no ha aprobado, Su nota final es", final)                    
         else:
            print("Camper no encontrado.")  
            break   
@@ -144,6 +151,11 @@ def imprimir_todos_los_campers():
                     print("N_celular:", camper['N_celular'])
                     print("N_fijo:", camper['N_fijo'])
                     print("Estado:", camper['Estado'])
+                    print("nota:", camper['nota'])
+                    print("Ruta General:", camper['Ruta General'])
+                    print("Ruta Especifica:", camper['Ruta Especifica'])
+                    print("Salon:", camper['Salon'])
+                    print("Grupo:", camper['Grupo'])
                     print("")
 
                   # print(f"ID: {camper['ID']}, nombres: {camper['nombres']}, Apellido: {camper['apellido']}, ciudad: {camper['ciudad']}, direccion: {camper['Direccion']}, Acudiente: {camper['Acudiente']}, Ncelular: {camper['N_celular']}, Nfijo: {camper['N_fijo']}, Estado: {camper['Estado']}")
@@ -226,6 +238,99 @@ def modificar_ruta_general(ruta_json):
 
     ruta_json = 'JSON/Campers.json'
 
+def asignar_horario_a_camper():
+    with open("JSON/Campers.json", "r") as edit:
+        data = json.load(edit)
+    campers = data["Campers"]
+    camper_encontrado = False
+    camper_id = int(input("Ingrese el número de identificación del camper que desea añadir al grupo:"))
+    for camper in campers:
+        if camper["ID"] == camper_id:
+            camper_encontrado = True
+            salon = camper["Salon"]
+            if salon == "Sputnik":
+                horario = input(f"¿Qué horario asignado desea elegir para el camper {camper['ID']} en el salón Sputnik?\n"
+                                "1. Horario 6:00 a 10:00\n"
+                                "2. Horario 10:00 a 14:00\n"
+                                "3. Horario de 14:00 a 18:00\n"
+                                "4. Horario de 18:00 a 22:00\n"
+                                "Ingrese el número correspondiente al horario deseado: ")
+                if horario == "1":
+                    camper["Grupo"] = "P1"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 6:00 a 10:00 en el grupo P1")
+                    
+                elif horario == "2":
+                    camper["Grupo"] = "P2"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 10:00 a 14:00 en el grupo P2")
+                    
+                elif horario == "3":
+                    camper["Grupo"] = "P3"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 14:00 a 18:00 en el grupo P3")
+                    
+                elif horario == "4":
+                    camper["Grupo"] = "P4"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 18:00 a 22:00 en el grupo P4")
+
+                else:
+                    print("Opción inválida. No se asignará un grupo para este camper.")
+            elif salon == "Artemis":
+                horario = input(f"¿Qué horario asignado desea elegir para el camper {camper['ID']} en el salón Artemis?\n"
+                                "1. Horario 6:00 a 10:00\n"
+                                "2. Horario 10:00 a 14:00\n"
+                                "3. Horario de 14:00 a 18:00\n"
+                                "4. Horario de 18:00 a 22:00\n"
+                                "Ingrese el número correspondiente al horario deseado: ")
+                if horario == "1":
+                    camper["Grupo"] = "M1"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 6:00 a 10:00 en el grupo M1")
+                    
+                elif horario == "2":
+                    camper["Grupo"] = "M2"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 10:00 a 14:00 en el grupo M2")
+                    
+                elif horario == "3":
+                    camper["Grupo"] = "M3"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 14:00 a 18:00 en el grupo M3")
+                    
+                elif horario == "4":
+                    camper["Grupo"] = "M4"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 18:00 a 22:00 en el grupo M4")
+
+                else:
+                    print("Opción inválida. No se asignará un grupo para este camper.")
+            elif salon == "Apollo":
+                horario = input(f"¿Qué horario asignado desea elegir para el camper {camper['ID']} en el salón Apollo?\n"
+                                "1. Horario 6:00 a 10:00\n"
+                                "2. Horario 10:00 a 12:00\n"
+                                "3. Horario de 14:00 a 18:00\n"
+                                "4. Horario de 18:00 a 22:00\n"
+                                "Ingrese el número correspondiente al horario deseado: ")
+                if horario == "1":
+                    camper["Grupo"] = "J1"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 6:00 a 10:00 en el grupo J1")
+                    
+                elif horario == "2":
+                    camper["Grupo"] = "J2"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 10:00 a 14:00 en el grupo J2")
+                    
+                elif horario == "3":
+                    camper["Grupo"] = "J3"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 14:00 a 18:00 en el grupo J3")
+                    
+                elif horario == "4":
+                    camper["Grupo"] = "J4"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 18:00 a 22:00 en el grupo J4")
+                else:
+                    print("Opción inválida. No se asignará un grupo para este camper.")
+            else:
+                print(f"No se reconoce el salón {salon}. No se asignará un grupo para el camper {camper['ID']}.")
+            break
+
+    if not camper_encontrado:
+        print(f"No se encontró ningún camper con el ID {camper_id}.")
+
+    with open("JSON/Campers.json", "w") as outfile:
+        json.dump(data, outfile, indent=4)
 
 def asignar_a_salon(camper, salones):
     for salon in salones:
@@ -250,6 +355,57 @@ def asignar_a_salon(camper, salones):
     salones[nuevo_salon] = 1  # Se agrega el nuevo salón a la lista de salones y se asigna el camper a este nuevo salón
     print(f"El camper con ID {camper['ID']} ha sido asignado al nuevo salón {camper['Salon']}.")
 
+def agregar_modulos_a_camper_desde_consola():
+    modulos_disponibles = [
+        "Fundamentos de Programacion",
+        "Programacion Web (HTML, CSS, B)",
+        "Programacion Formal",
+        "Bases de datos",
+        "Backend"
+    ]
+
+    id_camper = int(input("Ingrese el ID del camper al que desea agregar los módulos: "))
+    ruta_general = input("Ingrese la ruta general del camper (Java, NodeJs o NetCore): ")
+
+    # Obtener el camper con el ID especificado
+    with open('JSON/Campers.json') as f:
+        data = json.load(f)
+        campers = data['Campers']
+        camper_encontrado = next((c for c in campers if c['ID'] == id_camper), None)
+
+    if camper_encontrado:
+        if camper_encontrado['Ruta General'] == ruta_general:
+            print(f"Camper encontrado: {camper_encontrado['nombres']} {camper_encontrado['apellido']}")
+            print(f"Ruta General: {ruta_general}")
+            
+            modulos_seleccionados = []
+            agregar_mas_modulos = True
+            while agregar_mas_modulos:
+                print("Modulos disponibles para agregar:")
+                for i, modulo in enumerate(modulos_disponibles, 1):
+                    print(f"{i}. {modulo}")
+                
+                modulo_seleccionado = int(input("Ingrese el número del módulo que desea agregar: "))
+                modulos_seleccionados.append(modulos_disponibles[modulo_seleccionado - 1])
+
+                respuesta = input("¿Desea agregar otro módulo? (s/n): ")
+                if respuesta.lower() != "s":
+                    agregar_mas_modulos = False
+            
+            print(f"Añadiendo los siguientes módulos al camper {camper_encontrado['nombres']} {camper_encontrado['apellido']}:")
+            for modulo in modulos_seleccionados:
+                print(modulo)
+            camper_encontrado['Modulo'] = modulos_seleccionados
+            with open('JSON/Campers.json', 'w') as outfile:
+                json.dump(data, outfile, indent=4)
+            # Aquí podrías actualizar el registro del camper en el JSON con los nuevos módulos
+            # Por cuestiones de simplicidad, no se muestra el código para actualizar el JSON en este ejemplo
+        else:
+            print(f"El camper encontrado no tiene la ruta general {ruta_general}")
+    else:
+        print(f"No se encontró un camper con el ID {id_camper}")
+        
+
 def asignar_campers_a_salones(file_path):
     with open(file_path) as file:
         data = json.load(file)
@@ -263,9 +419,103 @@ def asignar_campers_a_salones(file_path):
     data["Campers"] = campers
     with open(file_path, 'w') as file:
         json.dump(data, file, indent=4)
-        
+
+def asignar_horario_a_camper():
+    with open("JSON/Campers.json", "r") as edit:
+        data = json.load(edit)
+    campers = data["Campers"]
+    camper_encontrado = False
+    camper_id = int(input("Ingrese el número de identificación del camper que desea añadir al grupo:"))
+    for camper in campers:
+        if camper["ID"] == camper_id:
+            camper_encontrado = True
+            salon = camper["Salon"]
+            if salon == "Sputnik":
+                horario = input(f"¿Qué horario asignado desea elegir para el camper {camper['ID']} en el salón Sputnik?\n"
+                                "1. Horario 6:00 a 10:00\n"
+                                "2. Horario 10:00 a 14:00\n"
+                                "3. Horario de 14:00 a 18:00\n"
+                                "4. Horario de 18:00 a 22:00\n"
+                                "Ingrese el número correspondiente al horario deseado: ")
+                if horario == "1":
+                    camper["Grupo"] = "P1"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 6:00 a 10:00 en el grupo P1")
+                    
+                elif horario == "2":
+                    camper["Grupo"] = "P2"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 10:00 a 14:00 en el grupo P2")
+                    
+                elif horario == "3":
+                    camper["Grupo"] = "P3"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 14:00 a 18:00 en el grupo P3")
+                    
+                elif horario == "4":
+                    camper["Grupo"] = "P4"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 18:00 a 22:00 en el grupo P4")
+
+                else:
+                    print("Opción inválida. No se asignará un grupo para este camper.")
+            elif salon == "Artemis":
+                horario = input(f"¿Qué horario asignado desea elegir para el camper {camper['ID']} en el salón Artemis?\n"
+                                "1. Horario 6:00 a 10:00\n"
+                                "2. Horario 10:00 a 14:00\n"
+                                "3. Horario de 14:00 a 18:00\n"
+                                "4. Horario de 18:00 a 22:00\n"
+                                "Ingrese el número correspondiente al horario deseado: ")
+                if horario == "1":
+                    camper["Grupo"] = "M1"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 6:00 a 10:00 en el grupo M1")
+                    
+                elif horario == "2":
+                    camper["Grupo"] = "M2"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 10:00 a 14:00 en el grupo M2")
+                    
+                elif horario == "3":
+                    camper["Grupo"] = "M3"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 14:00 a 18:00 en el grupo M3")
+                    
+                elif horario == "4":
+                    camper["Grupo"] = "M4"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 18:00 a 22:00 en el grupo M4")
+
+                else:
+                    print("Opción inválida. No se asignará un grupo para este camper.")
+            elif salon == "Apollo":
+                horario = input(f"¿Qué horario asignado desea elegir para el camper {camper['ID']} en el salón Apollo?\n"
+                                "1. Horario 6:00 a 10:00\n"
+                                "2. Horario 10:00 a 12:00\n"
+                                "3. Horario de 14:00 a 18:00\n"
+                                "4. Horario de 18:00 a 22:00\n"
+                                "Ingrese el número correspondiente al horario deseado: ")
+                if horario == "1":
+                    camper["Grupo"] = "J1"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 6:00 a 10:00 en el grupo J1")
+                    
+                elif horario == "2":
+                    camper["Grupo"] = "J2"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 10:00 a 14:00 en el grupo J2")
+                    
+                elif horario == "3":
+                    camper["Grupo"] = "J3"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 14:00 a 18:00 en el grupo J3")
+                    
+                elif horario == "4":
+                    camper["Grupo"] = "J4"
+                    print(f"El camper con el id {camper_id} ha sido añadido al horario de 18:00 a 22:00 en el grupo J4")
+                else:
+                    print("Opción inválida. No se asignará un grupo para este camper.")
+            else:
+                print(f"No se reconoce el salón {salon}. No se asignará un grupo para el camper {camper['ID']}.")
+            break
+
+    if not camper_encontrado:
+        print(f"No se encontró ningún camper con el ID {camper_id}.")
+
+    with open("JSON/Campers.json", "w") as outfile:
+        json.dump(data, outfile, indent=4)
 
 def camper_menu():
+
     while True:
         print("""
             *********************
@@ -274,14 +524,16 @@ def camper_menu():
             *                   *
             *********************
             """)
-        print("*Agregar Camper    (1)")
-        print("*Notas Camper      (2)")
-        print("*Actualizar Camper (3)")
-        print("*Listar Campers    (4)")
-        print("*Listar por Estado (5)")
-        print("*Modificar Ruta    (6)")
-        print("*Asignar Salones   (7)")  # Nueva opción para asignar campers a salones
-        print("*Atras             (8)")
+        print("*Agregar Camper       (1)")
+        print("*Notas Camper         (2)")
+        print("*Actualizar Camper    (3)")
+        print("*Listar Campers       (4)")
+        print("*Listar por Estado    (5)")
+        print("*Modificar Ruta       (6)")
+        print("*Asignar Salones      (7)")  # Nueva opción para asignar campers a salones
+        print("*Asignar Hora/Grupo   (8)")
+        print("*Agregar Modulo       (9)")  # Nueva opción para asignar horario a camper# Nueva opción para asignar horario a camper
+        print("*Atras                (10)")
 
         opcion = input("Ingrese la opción deseada: ")
 
@@ -293,11 +545,13 @@ def camper_menu():
             5: listar_campers_por_estado_opcion,
             6: modificar_ruta_general,
             7: asignar_campers_a_salones,  # Llama a la función que asigna campers a salones
-            8: lambda: print("Saliendo del menú de administración.")
+            8: asignar_horario_a_camper,
+            9: agregar_modulos_a_camper_desde_consola,# Llama a la función que asigna horario a camper
+            10: lambda: print("Saliendo del menú de administración.")
         }
 
-        if opcion.isdigit() and int(opcion) in range(1, 9):
-            if int(opcion) == 7:
+        if opcion.isdigit() and int(opcion) in range(1, 10):
+            if int(opcion) in [7, 8]:
                 opciones_dict[int(opcion)]('JSON/Campers.json')  # Pasa el archivo JSON como argumento a la función seleccionada
             else:
                 opciones_dict[int(opcion)]()
@@ -305,7 +559,7 @@ def camper_menu():
             print("Saliendo del menú de administración.")
             break
         else:
-            print("Ingrese una opción válida (1-8).")
+            print("Ingrese una opción válida (1-9).")
             continue
 
 camper_menu()

@@ -12,13 +12,17 @@
             "Estado": "Aprobado",
             "nota": [
                 "",
-                80.0
+                78.3
             ],
             "Ruta General": "NetCore",
             "Ruta Especifica": "Continua",
             "Salon": "Sputnik",
-            "Grupo": "Continua"
-
+            "Grupo": "P3",
+            "Modulo": [
+                "Fundamentos de Programacion",
+                "Backend",
+                "Programacion Web (HTML, CSS, B)"
+            ]
         },
         {
             "ID": 7,
@@ -34,8 +38,8 @@
             "Ruta General": "a",
             "Ruta Especifica": "Contina",
             "Salon": "Salon-2",
-            "Grupo": "Continua"
-
+            "Grupo": "Continua",
+            "Modulo": "P3"
         }
     ]
 }
